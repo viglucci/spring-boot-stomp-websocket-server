@@ -12,7 +12,7 @@
 	<artifactId>websocket-test-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>websocket-test-server</name>
+	<name>spring-boot-stomp-websocket-server</name>
 	<description>Websocket example project for Spring Boot</description>
 
 	<properties>
