@@ -1,7 +1,7 @@
 package com.solidice.websockettestserver.http.websocket.controllers;
 
-import com.solidice.websockettestserver.hello.Greeting;
-import com.solidice.websockettestserver.hello.HelloMessage;
+import com.solidice.websockettestserver.models.GreetingResponse;
+import com.solidice.websockettestserver.models.HelloMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ public class GreetingController {
 
 	@MessageMapping("/hello")
 	@SendTo("/topic/greetings")
-	public Greeting greeting(HelloMessage message) throws Exception {
-		return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
+	public GreetingResponse handleGreetingMessage(HelloMessage message) throws Exception {
+		return new GreetingResponse("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
 	}
 }

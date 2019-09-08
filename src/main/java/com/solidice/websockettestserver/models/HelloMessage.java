@@ -1,4 +1,4 @@
-package com.solidice.websockettestserver.hello;
+package com.solidice.websockettestserver.models;
 
 /**
  * @author Kevin
@@ -8,8 +8,7 @@ public class HelloMessage {
 
 	private String name;
 
-	public HelloMessage() {
-	}
+	public HelloMessage() {}
 
 	public HelloMessage(String name) {
 		this.name = name;

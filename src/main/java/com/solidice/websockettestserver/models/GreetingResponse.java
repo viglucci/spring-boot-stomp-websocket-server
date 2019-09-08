@@ -1,17 +1,17 @@
-package com.solidice.websockettestserver.hello;
+package com.solidice.websockettestserver.models;
 
 /**
  * @author Kevin
  * @since 9/6/2019
  */
-public class Greeting {
+public class GreetingResponse {
 
 	private String content;
 
-	public Greeting() {
+	public GreetingResponse() {
 	}
 
-	public Greeting(String content) {
+	public GreetingResponse(String content) {
 		this.content = content;
 	}
 

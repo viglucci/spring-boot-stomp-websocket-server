@@ -1,4 +1,5 @@
 var stompClient = null;
+var pingTimeout = null;
 
 function setConnected(connected) {
 	$("#connect").prop("disabled", connected);
@@ -8,20 +9,36 @@ function setConnected(connected) {
 	}
 	else {
 		$("#conversation").hide();
+		if (pingTimeout) {
+			clearInterval(pingTimeout);
+		}
 	}
 	$("#greetings").html("");
 }
 
-function connect() {
-	var socket = new SockJS('/gs-guide-websocket');
-	stompClient = Stomp.over(socket);
-	stompClient.connect({}, function (frame) {
-		setConnected(true);
-		console.log('Connected: ' + frame);
-		stompClient.subscribe('/topic/greetings', function (greeting) {
-			showGreeting(JSON.parse(greeting.body).content);
-		});
+function onConnect(frame) {
+
+	setConnected(true);
+
+	console.log('Connected: ', frame);
+
+	stompClient.subscribe('/topic/greetings', function (greeting) {
+		showGreeting(JSON.parse(greeting.body).content);
 	});
+
+	stompClient.subscribe('/user/queue/pong', function (message) {
+		console.log(JSON.parse(message.body).content);
+	});
+
+	pingTimeout = setInterval(function () {
+		stompClient.send("/app/ping");
+	}, 1000);
+}
+
+function connect() {
+	var socket = new SockJS('/ws');
+	stompClient = Stomp.over(socket);
+	stompClient.connect({}, onConnect);
 }
 
 function disconnect() {

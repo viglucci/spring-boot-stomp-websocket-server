@@ -4,10 +4,12 @@ package com.solidice.websockettestserver.models;
  * @author Kevin
  * @since 9/7/2019
  */
-public class PongResposne {
-	private String content;
+public class PongResponse {
+	private String content = "pong";
 
-	public PongResposne() {
-		this.content = "pong";
+	public PongResponse() {}
+
+	public String getContent() {
+		return content;
 	}
 }
