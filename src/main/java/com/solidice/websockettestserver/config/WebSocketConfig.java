@@ -25,39 +25,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/topic");
+		config.enableSimpleBroker("/topic", "/queue");
 		config.setApplicationDestinationPrefixes("/app");
 	}
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-
-		HandshakeHandler handshakeHandler = new HandshakeHandler() {
-			@Override
-			public boolean doHandshake(ServerHttpRequest serverHttpRequest,
-			                           ServerHttpResponse serverHttpResponse,
-			                           WebSocketHandler webSocketHandler,
-			                           Map<String, Object> map) throws HandshakeFailureException {
-				return false;
-			}
-
-			public boolean beforeHandshake(ServerHttpRequest request,
-			                               ServerHttpResponse response,
-			                               WebSocketHandler webSocketHandler,
-			                               Map attributes) throws Exception {
-
-				if (request instanceof ServletServerHttpRequest) {
-					ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
-					HttpSession session = servletRequest.getServletRequest().getSession();
-					attributes.put("sessionId", session.getId());
-				}
-
-				return true;
-			}
-		};
-
 		registry.addEndpoint("/ws")
-				.setHandshakeHandler(handshakeHandler)
 				.withSockJS();
 	}
 }
